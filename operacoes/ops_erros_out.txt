@@ -1,0 +1,27 @@
+=== ops_erros.txt ===
+undo: empty
+addBook: 978-972-0-04789-2
+register: [1] Ana Ferreira (ESTUDANTE)
+borrow: error (unknown reader/book)
+borrow: error (unknown reader/book)
+return: error (no such loan)
+borrow: [1] Ana Ferreira (ESTUDANTE) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 1)
+return: error (no such loan)
+return: error (no such loan)
+return: ok
+return: error (no such loan)
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 1/1)
+loansOf 1:
+  (no loans)
+loansOf 42:
+  (no loans)
+undo: ok
+undo: ok
+undo: ok
+undo: empty
+undo: empty
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 1/1)
+readers:
+  (empty)

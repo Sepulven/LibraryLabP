@@ -1,0 +1,40 @@
+=== ops_undoSimples.txt ===
+addBook: 978-972-0-04789-2
+register: [1] Ana Ferreira (ESTUDANTE)
+register: [2] Rui Almeida (DOCENTE)
+readers:
+  - [1] Ana Ferreira (ESTUDANTE)
+  - [2] Rui Almeida (DOCENTE)
+undo: ok
+readers:
+  - [1] Ana Ferreira (ESTUDANTE)
+register: [2] Bia Santos (INVESTIGADOR)
+readers:
+  - [1] Ana Ferreira (ESTUDANTE)
+  - [2] Bia Santos (INVESTIGADOR)
+borrow: [1] Ana Ferreira (ESTUDANTE) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 1)
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 1/2)
+loansOf 1:
+  - [1] Ana Ferreira (ESTUDANTE) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 1)
+undo: ok
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 2/2)
+loansOf 1:
+  (no loans)
+borrow: [1] Ana Ferreira (ESTUDANTE) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 2)
+return: ok
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 2/2)
+loansOf 1:
+  (no loans)
+undo: ok
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 1/2)
+loansOf 1:
+  - [1] Ana Ferreira (ESTUDANTE) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 2)
+undo: ok
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 2/2)
+loansOf 1:
+  (no loans)

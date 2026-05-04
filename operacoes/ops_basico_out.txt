@@ -1,0 +1,41 @@
+=== ops_basico.txt ===
+addBook: 978-972-0-04789-2
+addBook: 978-972-21-0502-6
+addBook: 978-972-21-0125-7
+register: [1] Ana Ferreira (ESTUDANTE)
+register: [2] Rui Almeida (DOCENTE)
+register: [3] Bia Santos (INVESTIGADOR)
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 3/3)
+  - 978-972-21-0125-7 "Sermao de Santo Antonio aos Peixes" by Antonio Vieira (available 1/1)
+  - 978-972-21-0502-6 "Memorial do Convento" by Jose Saramago (available 2/2)
+readers:
+  - [1] Ana Ferreira (ESTUDANTE)
+  - [2] Rui Almeida (DOCENTE)
+  - [3] Bia Santos (INVESTIGADOR)
+borrow: [1] Ana Ferreira (ESTUDANTE) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 1)
+borrow: [2] Rui Almeida (DOCENTE) - 978-972-21-0502-6 "Memorial do Convento" by Jose Saramago (day 1)
+borrow: [3] Bia Santos (INVESTIGADOR) - 978-972-21-0125-7 "Sermao de Santo Antonio aos Peixes" by Antonio Vieira (day 1)
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 2/3)
+  - 978-972-21-0125-7 "Sermao de Santo Antonio aos Peixes" by Antonio Vieira (available 0/1)
+  - 978-972-21-0502-6 "Memorial do Convento" by Jose Saramago (available 1/2)
+loansOf 1:
+  - [1] Ana Ferreira (ESTUDANTE) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 1)
+loansOf 2:
+  - [2] Rui Almeida (DOCENTE) - 978-972-21-0502-6 "Memorial do Convento" by Jose Saramago (day 1)
+loansOf 3:
+  - [3] Bia Santos (INVESTIGADOR) - 978-972-21-0125-7 "Sermao de Santo Antonio aos Peixes" by Antonio Vieira (day 1)
+return: ok
+return: ok
+return: ok
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 3/3)
+  - 978-972-21-0125-7 "Sermao de Santo Antonio aos Peixes" by Antonio Vieira (available 1/1)
+  - 978-972-21-0502-6 "Memorial do Convento" by Jose Saramago (available 2/2)
+loansOf 1:
+  (no loans)
+loansOf 2:
+  (no loans)
+loansOf 3:
+  (no loans)

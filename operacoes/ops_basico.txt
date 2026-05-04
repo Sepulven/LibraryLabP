@@ -1,0 +1,22 @@
+addBook;978-972-0-04789-2;Os Maias;Eca de Queiros;3
+addBook;978-972-21-0502-6;Memorial do Convento;Jose Saramago;2
+addBook;978-972-21-0125-7;Sermao de Santo Antonio aos Peixes;Antonio Vieira;1
+register;Ana Ferreira;ESTUDANTE
+register;Rui Almeida;DOCENTE
+register;Bia Santos;INVESTIGADOR
+catalog
+readers
+borrow;1;978-972-0-04789-2;1
+borrow;2;978-972-21-0502-6;1
+borrow;3;978-972-21-0125-7;1
+catalog
+loansOf;1
+loansOf;2
+loansOf;3
+return;1;978-972-0-04789-2;2
+return;2;978-972-21-0502-6;2
+return;3;978-972-21-0125-7;2
+catalog
+loansOf;1
+loansOf;2
+loansOf;3

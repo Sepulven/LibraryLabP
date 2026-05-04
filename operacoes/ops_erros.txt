@@ -1,0 +1,21 @@
+undo
+addBook;978-972-0-04789-2;Os Maias;Eca de Queiros;1
+register;Ana Ferreira;ESTUDANTE
+borrow;99;978-972-0-04789-2;1
+borrow;1;978-000-00-00000-0;1
+return;1;978-972-0-04789-2;1
+borrow;1;978-972-0-04789-2;1
+return;99;978-972-0-04789-2;2
+return;1;978-000-00-00000-0;2
+return;1;978-972-0-04789-2;2
+return;1;978-972-0-04789-2;3
+catalog
+loansOf;1
+loansOf;42
+undo
+undo
+undo
+undo
+undo
+catalog
+readers

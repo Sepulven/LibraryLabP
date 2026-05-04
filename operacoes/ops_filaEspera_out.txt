@@ -1,0 +1,23 @@
+=== ops_filaEspera.txt ===
+addBook: 978-972-0-04789-2
+register: [1] Ana Ferreira (ESTUDANTE)
+register: [2] Rui Almeida (DOCENTE)
+register: [3] Bia Santos (INVESTIGADOR)
+register: [4] Leo Monteiro (ESTUDANTE)
+register: [5] Zaz Pinto (DOCENTE)
+borrow: [1] Ana Ferreira (ESTUDANTE) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 1)
+borrow: waitlisted 2 for 978-972-0-04789-2
+borrow: waitlisted 4 for 978-972-0-04789-2
+borrow: waitlisted 5 for 978-972-0-04789-2
+borrow: waitlisted 3 for 978-972-0-04789-2
+waiting 978-972-0-04789-2:
+  - [3] Bia Santos (INVESTIGADOR)
+  - [2] Rui Almeida (DOCENTE)
+  - [5] Zaz Pinto (DOCENTE)
+  - [4] Leo Monteiro (ESTUDANTE)
+loansOf 1:
+  - [1] Ana Ferreira (ESTUDANTE) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 1)
+loansOf 2:
+  (no loans)
+loansOf 3:
+  (no loans)

@@ -1,0 +1,28 @@
+addBook;978-972-0-04789-2;Os Maias;Eca de Queiros;1
+register;Ana Ferreira;ESTUDANTE
+register;Rui Almeida;DOCENTE
+register;Bia Santos;INVESTIGADOR
+borrow;1;978-972-0-04789-2;1
+borrow;2;978-972-0-04789-2;2
+borrow;3;978-972-0-04789-2;3
+waiting;978-972-0-04789-2
+undo
+waiting;978-972-0-04789-2
+undo
+waiting;978-972-0-04789-2
+return;1;978-972-0-04789-2;4
+catalog
+loansOf;1
+borrow;2;978-972-0-04789-2;5
+borrow;3;978-972-0-04789-2;6
+waiting;978-972-0-04789-2
+return;2;978-972-0-04789-2;7
+catalog
+loansOf;1
+loansOf;3
+waiting;978-972-0-04789-2
+undo
+catalog
+loansOf;1
+loansOf;3
+waiting;978-972-0-04789-2

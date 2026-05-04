@@ -1,0 +1,44 @@
+=== ops_undoComplexo.txt ===
+addBook: 978-972-0-04789-2
+register: [1] Ana Ferreira (ESTUDANTE)
+register: [2] Rui Almeida (DOCENTE)
+register: [3] Bia Santos (INVESTIGADOR)
+borrow: [1] Ana Ferreira (ESTUDANTE) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 1)
+borrow: waitlisted 2 for 978-972-0-04789-2
+borrow: waitlisted 3 for 978-972-0-04789-2
+waiting 978-972-0-04789-2:
+  - [3] Bia Santos (INVESTIGADOR)
+  - [2] Rui Almeida (DOCENTE)
+undo: ok
+waiting 978-972-0-04789-2:
+  - [2] Rui Almeida (DOCENTE)
+undo: ok
+waiting 978-972-0-04789-2:
+  (empty)
+return: ok
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 1/1)
+loansOf 1:
+  (no loans)
+borrow: [2] Rui Almeida (DOCENTE) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 5)
+borrow: waitlisted 3 for 978-972-0-04789-2
+waiting 978-972-0-04789-2:
+  - [3] Bia Santos (INVESTIGADOR)
+return: auto-borrow [3] Bia Santos (INVESTIGADOR) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 7)
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 0/1)
+loansOf 1:
+  (no loans)
+loansOf 3:
+  - [3] Bia Santos (INVESTIGADOR) - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (day 7)
+waiting 978-972-0-04789-2:
+  (empty)
+undo: ok
+catalog:
+  - 978-972-0-04789-2 "Os Maias" by Eca de Queiros (available 0/1)
+loansOf 1:
+  (no loans)
+loansOf 3:
+  (no loans)
+waiting 978-972-0-04789-2:
+  - [3] Bia Santos (INVESTIGADOR)
