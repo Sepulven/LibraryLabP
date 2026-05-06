@@ -1,5 +1,8 @@
 package project;
 
+import java.lang.StringBuilder;
+import java.util.Objects;
+
 /**
  * Representa um leitor da biblioteca.
  *
@@ -7,40 +10,47 @@ package project;
  */
 public class Reader {
 
-    public enum Priority { ESTUDANTE, DOCENTE, INVESTIGADOR }
+    public enum Priority { ESTUDANTE, DOCENTE, INVESTIGADOR };
+    private Priority priority;
+    private int id;
+    private String name;
 
     /**
      * Constrói um leitor com o identificador, nome e prioridade dados.
      */
     public Reader(int id, String name, Priority priority) {
-        // TODO
+        this.priority = priority;
+        this.name = name;
+        this.id = id;
     }
 
     public int getId() {
-        // TODO
-        return 0;
+        return id;
     }
 
     public String getName() {
-        // TODO
-        return null;
+        return name;
     }
 
     public Priority getPriority() {
-        // TODO
-        return null;
+        return priority;
     }
 
     @Override
     public int hashCode() {
-        // TODO
-        return 0;
+        return Objects.hash(id);
     }
 
     @Override
     public boolean equals(Object other) {
-        // TODO
-        return false;
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        Reader obj = (Reader) other;
+        return id == obj.id;
     }
 
     /**
@@ -49,7 +59,15 @@ public class Reader {
      */
     @Override
     public String toString() {
-        // TODO
-        return null;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("[")
+          .append(id)
+          .append("] ")
+          .append(name)
+          .append(" (")
+          .append(priority)
+          .append(")");
+        return sb.toString();
     }
 }
