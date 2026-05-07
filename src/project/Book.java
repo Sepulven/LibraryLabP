@@ -1,5 +1,9 @@
 package project;
 
+
+import java.lang.StringBuilder;
+import java.util.Objects;
+
 /**
  * Representa um livro do catálogo da biblioteca.
  *
@@ -7,57 +11,66 @@ package project;
  */
 public class Book {
 
+    private String isbn;
+    private String title;
+    private String author;
+    private int total;
+    private int avaibleCopies;
     /**
      * Constrói um livro com totalCopies exemplares (todos inicialmente
      * disponíveis).
      */
     public Book(String isbn, String title, String author, int totalCopies) {
-        // TODO
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.total = totalCopies;
+        this.avaibleCopies = totalCopies;
     }
 
     public String getIsbn() {
-        // TODO
-        return null;
+        return isbn;
     }
 
     public String getTitle() {
-        // TODO
-        return null;
+        return title;
     }
 
     public String getAuthor() {
-        // TODO
-        return null;
+        return author;
     }
 
     public int totalCopies() {
-        // TODO
-        return 0;
+        return total;
     }
 
     public int availableCopies() {
-        // TODO
-        return 0;
+        return avaibleCopies;
     }
 
     public void borrowCopy() {
-        // TODO
+        avaibleCopies--;
     }
 
     public void returnCopy() {
-        // TODO
+        avaibleCopies++;
     }
 
     @Override
     public int hashCode() {
-        // TODO
-        return 0;
+        return Objects.hash(isbn);
     }
 
     @Override
     public boolean equals(Object other) {
-        // TODO
-        return false;
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        Book obj = (Book)other;
+        return (obj.isbn == isbn);
     }
 
     /**
@@ -66,8 +79,19 @@ public class Book {
      */
     @Override
     public String toString() {
-        // TODO
-        return null;
+        StringBuilder sb = new StringBuilder ();
+
+        sb.append(isbn)
+          .append(" \"")
+          .append(title)
+          .append("\" by ")
+          .append(author)
+          .append(" (available ")
+          .append(avaibleCopies)
+          .append("/")
+          .append(total)
+          .append(")");
+        return sb.toString();
     }
 
     /**
@@ -76,7 +100,13 @@ public class Book {
      * Exemplo: '978-972-0-04789-2 "Os Maias" by Eca de Queiros'
      */
     public String toShortString() {
-        // TODO
-        return null;
+        StringBuilder sb = new StringBuilder ();
+
+        sb.append(isbn)
+          .append(" \"")
+          .append(title)
+          .append("\" by ")
+          .append(author);
+        return sb.toString();
     }
 }
