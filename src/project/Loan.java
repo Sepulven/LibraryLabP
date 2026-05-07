@@ -1,27 +1,30 @@
 package project;
 
+import java.lang.StringBuilder;
 /**
  * Representa um empréstimo ativo de um livro a um leitor numa dada data.
  */
 public class Loan {
+    private Reader reader;
+    private Book book;
+    private int day;
 
     public Loan(Reader reader, Book book, int day) {
-        // TODO
+        this.reader = reader;
+        this.book = book;
+        this.day = day;
     }
 
     public Reader getReader() {
-        // TODO
-        return null;
+        return reader;
     }
 
     public Book getBook() {
-        // TODO
-        return null;
+        return book;
     }
 
     public int getDay() {
-        // TODO
-        return 0;
+        return day;
     }
 
     /**
@@ -30,7 +33,12 @@ public class Loan {
      */
     @Override
     public String toString() {
-        // TODO
-        return null;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(reader)
+          .append(" - ")
+          .append(book.toShortString())
+          .append(" (day ").append(day).append(")");
+        return sb.toString();
     }
 }
