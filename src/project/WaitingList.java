@@ -1,6 +1,9 @@
 package project;
 
 import java.util.PriorityQueue;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Queue;
 
 /**
  * Fila de espera associada a um livro. Os leitores são atendidos por ordem
@@ -11,45 +14,70 @@ import java.util.PriorityQueue;
  */
 public class WaitingList {
 
+    private record Entry(Reader reader, long order){}
+    private Queue<Entry> q;
+    private int counter;
+
+
     public WaitingList() {
-        // TODO
+        q = new PriorityQueue<>(
+            Comparator
+                    .comparingInt(
+        (Entry e) ->  -e.reader().getPriority().ordinal())
+                    .thenComparingLong(Entry::order)
+        );
+        counter = 0;
     }
 
     /** Acrescenta reader ao fim da fila (respeitando a sua prioridade). */
     public void add(Reader reader) {
-        // TODO
+        q.add(new Entry(reader, counter++));
     }
 
     /** Devolve e remove o próximo leitor a ser atendido. */
     public Reader next() {
-        // TODO
-        return null;
+        Entry e = q.peek();
+
+        q.remove(e);
+        return e.reader();
     }
 
     /** Devolve (sem remover) o próximo leitor a ser atendido. */
     public Reader peek() {
-        // TODO
-        return null;
+        return q.peek().reader();
     }
 
     public boolean contains(Reader reader) {
-        // TODO
+        Iterator<Entry> it = q.iterator();
+
+        while (it.hasNext()) {
+            if (it.next().reader().equals(reader)) {
+                return true;
+            }
+        }
         return false;
     }
 
     /** Remove reader da fila. */
     public void remove(Reader reader) {
-        // TODO
+        Iterator<Entry> it = q.iterator();
+        Entry e;
+
+        while (it.hasNext()) {
+            e = it.next();
+            if (e.reader().equals(reader)) {
+                q.remove(e);
+                return ;
+            }
+        }
     }
 
     public boolean isEmpty() {
-        // TODO
-        return true;
+        return q.isEmpty();
     }
 
     public int size() {
-        // TODO
-        return 0;
+        return q.size();
     }
 
     /**
@@ -59,7 +87,17 @@ public class WaitingList {
      */
     @Override
     public String toString() {
-        // TODO
-        return null;
+        StringBuilder sb = new StringBuilder();
+        Iterator<Entry> it = q.iterator();
+
+        sb.append("[");
+        while (it.hasNext()) {
+            sb.append(it.next().reader());
+            if (it.hasNext()) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }
