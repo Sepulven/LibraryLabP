@@ -4,12 +4,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Iterator;
+
+import java.lang.StringBuilder;
+
 /**
  * Estado global da biblioteca.
  */
 public class Library {
 
-    public Library() { }
+    private TreeMap<String,Book> booksCatalog;
+    private TreeMap<Integer, Reader> readers;
+    private HashMap<Integer, List<Loan>> loans;
+    private HashMap<String, WaitingList> booksWaitingList;
+    private int readersCounter;
+
+    public Library() {
+       booksCatalog = new TreeMap<>();
+       readers = new TreeMap<>();
+       loans = new LinkedHashMap<>();
+       booksWaitingList = new LinkedHashMap<>();
+       readersCounter = 1; 
+    }
 
     // ----- Operações principais -----
 
@@ -17,7 +35,7 @@ public class Library {
      * Acrescenta um livro ao catálogo.
      */
     public void addBook(Book book) {
-        // TODO
+        booksCatalog.put(book.getIsbn(), book);
     }
 
     /**
@@ -25,62 +43,99 @@ public class Library {
      * e devolve-o.
      */
     public Reader registerReader(String name, Reader.Priority p) {
-        // TODO
-        return null;
+        Reader r = new Reader(readersCounter++, name, p);
+
+        readers.put(r.getId(), r);
+        return r;
     }
 
     public boolean hasBook(String isbn) {
-        // TODO
-        return false;
+        return booksCatalog.containsKey(isbn);
     }
 
     public boolean hasReader(int id) {
-        // TODO
-        return false;
+        return readers.containsKey(id);
     }
 
     public Book getBook(String isbn) {
-        // TODO
-        return null;
+        return booksCatalog.get(isbn);
     }
 
     public Reader getReader(int id) {
-        // TODO
-        return null;
+        return readers.get(id);
     }
 
     /**
      * Tenta emprestar um exemplar do livro ao leitor na data dada.
      */
     public Loan borrow(int readerId, String isbn, int day) {
-        // TODO
-        return null;
+        Reader r = getReader(readerId);
+        Book b = getBook(isbn);
+        List<Loan> loanList = loans.get(readerId);
+
+        if (b == null || r == null) {
+            return null;
+        }
+
+        if (b.availableCopies() == 0) {
+           waitingListFor(isbn).add(r);
+           return null;
+        }
+        if (loanList == null) {
+            loanList = new LinkedList<>();
+            loans.put(readerId, loanList);
+        }
+
+        Loan loan = new Loan(r, b, day);
+
+        loanList.add(loan);
+        b.borrowCopy();
+        return loan;
     }
 
     /**
      * Regista a devolução de um exemplar.
      */
     public Loan returnBook(int readerId, String isbn, int day) {
-        // TODO
-        return null;
+        List<Loan> loanList = loans.get(readerId);
+        WaitingList w = waitingListFor(isbn);
+        Book b = booksCatalog.get(isbn);
+
+        if (b == null || loanList == null){
+            return null;
+        }
+
+        for (Loan l : loanList) {
+            if (l.getBook().equals(b)) {
+                loanList.remove(l);
+            }
+        }
+        b.returnCopy();
+
+        if (w.isEmpty()) {
+            return null;
+        }
+        return borrow(w.next().getId(), isbn, day);
     }
 
     /** Empréstimos ativos do leitor. Lista vazia se o leitor não existir. */
     public List<Loan> loansOf(int readerId) {
-        // TODO
-        return null;
+        List<Loan> l = loans.get(readerId);
+
+        if (l == null) {
+            return new LinkedList<>();
+        }
+        return l;
     }
 
     /** Livros por ordem alfabética de ISBN. */
     public List<Book> catalog() {
-        // TODO
-        return null;
+        return new LinkedList<>(booksCatalog.values());
     }
 
     /** Leitores por ordem crescente de id. */
     public List<Reader> readers() {
-        // TODO
-        return null;
+        return new LinkedList<>(readers.values());
     }
 
     /**
@@ -88,8 +143,13 @@ public class Library {
      * vazia).
      */
     public WaitingList waitingListFor(String isbn) {
-        // TODO
-        return null;
+        WaitingList w = booksWaitingList.get(isbn);
+
+        if (w == null) {
+            w = new WaitingList();
+            booksWaitingList.put(isbn, w);
+        }
+        return w;
     }
 
     // ----- Operações usadas pelo LibraryManager no undo -----
@@ -98,7 +158,8 @@ public class Library {
      * Remove um leitor do sistema.
      */
     public void removeReader(int id) {
-        // TODO
+        readers.remove(id);
+        readersCounter--;
     }
 
     /**
@@ -106,7 +167,8 @@ public class Library {
      * Loan da lista de empréstimos do leitor. NÃO mexe na fila de espera.
      */
     public void cancelLoan(int readerId, String isbn, Loan loan) {
-        // TODO
+        loans.get(readerId).remove(loan);
+        loan.getBook().returnCopy();
     }
 
     /**
@@ -114,7 +176,12 @@ public class Library {
      * como emprestada e acrescenta o Loan à lista do leitor.
      */
     public void reinstateLoan(int readerId, String isbn, Loan loan) {
-        // TODO
+        List<Loan> loanList = loans.get(readerId);
+
+        if (loanList != null) {
+            booksCatalog.get(isbn).borrowCopy();
+            loanList.add(loan);
+        }
     }
 
     /**
@@ -127,7 +194,43 @@ public class Library {
      */
     @Override
     public String toString() {
-        // TODO
-        return null;
+        StringBuilder sb = new StringBuilder();
+        Iterator<Book> booksIt = booksCatalog.values().iterator();
+        Iterator<Reader> readersIt = readers.values().iterator();
+        Iterator<List<Loan>> loansIt = loans.values().iterator();
+        Iterator<String> waitingListsIt = booksWaitingList.keySet().iterator();
+
+        sb.append("Books:");
+        while (booksIt.hasNext()) {
+            sb.append("  ")
+              .append(booksIt.next())
+              .append(System.lineSeparator());
+        }
+
+        sb.append("Readers:");
+        while (readersIt.hasNext()) {
+            sb.append("  ")
+              .append(readersIt.next())
+              .append(System.lineSeparator());
+        }
+
+        sb.append("Loans:");
+        while (loansIt.hasNext()) {
+            sb.append("  ")
+              .append(loansIt.next())
+              .append(System.lineSeparator());
+        }
+
+        String isbn;
+        sb.append("Waiting Lists:");
+        while (waitingListsIt.hasNext()) {
+            isbn = waitingListsIt.next();
+            sb.append("  ")
+              .append(isbn)
+              .append("-> ")
+              .append(booksWaitingList.get(isbn))
+              .append(System.lineSeparator());
+        }
+        return sb.toString();
     }
 }
