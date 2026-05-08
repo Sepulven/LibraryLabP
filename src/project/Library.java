@@ -195,36 +195,30 @@ public class Library {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        Iterator<Book> booksIt = booksCatalog.values().iterator();
-        Iterator<Reader> readersIt = readers.values().iterator();
-        Iterator<List<Loan>> loansIt = loans.values().iterator();
-        Iterator<String> waitingListsIt = booksWaitingList.keySet().iterator();
 
         sb.append("Books:");
-        while (booksIt.hasNext()) {
+        for (Book b : booksCatalog.values()) {
             sb.append("  ")
-              .append(booksIt.next())
+              .append(b)
               .append(System.lineSeparator());
         }
 
         sb.append("Readers:");
-        while (readersIt.hasNext()) {
+        for (Reader r : readers.values()) {
             sb.append("  ")
-              .append(readersIt.next())
+              .append(r)
               .append(System.lineSeparator());
         }
 
         sb.append("Loans:");
-        while (loansIt.hasNext()) {
+        for (List<Loan> l : loans.values()) {
             sb.append("  ")
-              .append(loansIt.next())
+              .append(l)
               .append(System.lineSeparator());
         }
 
-        String isbn;
         sb.append("Waiting Lists:");
-        while (waitingListsIt.hasNext()) {
-            isbn = waitingListsIt.next();
+        for (String isbn : booksWaitingList.keySet()) {
             sb.append("  ")
               .append(isbn)
               .append("-> ")
