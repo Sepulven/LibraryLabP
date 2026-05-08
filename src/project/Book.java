@@ -15,7 +15,7 @@ public class Book {
     private String title;
     private String author;
     private int total;
-    private int avaibleCopies;
+    private int availableCopies;
     /**
      * Constrói um livro com totalCopies exemplares (todos inicialmente
      * disponíveis).
@@ -25,7 +25,7 @@ public class Book {
         this.title = title;
         this.author = author;
         this.total = totalCopies;
-        this.avaibleCopies = totalCopies;
+        this.availableCopies = totalCopies;
     }
 
     public String getIsbn() {
@@ -45,20 +45,20 @@ public class Book {
     }
 
     public int availableCopies() {
-        return avaibleCopies;
+        return availableCopies;
     }
 
     public void borrowCopy() {
-        avaibleCopies--;
+        availableCopies--;
     }
 
     public void returnCopy() {
-        avaibleCopies++;
+        availableCopies++;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isbn);
+        return Objects.hash(isbn, title, author);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class Book {
           .append("\" by ")
           .append(author)
           .append(" (available ")
-          .append(avaibleCopies)
+          .append(availableCopies)
           .append("/")
           .append(total)
           .append(")");
