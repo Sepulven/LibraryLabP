@@ -58,7 +58,7 @@ public class Book {
 
     @Override
     public int hashCode() {
-        return Objects.hash(isbn, title, author);
+        return Objects.hash(isbn);
     }
 
     @Override

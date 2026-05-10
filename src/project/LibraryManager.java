@@ -1,74 +1,80 @@
 package project;
 
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Biblioteca com histórico de operações e anulação da última (undo).
  */
 public class LibraryManager {
+    private Library library;
+
+    private record OperationData (String operation, int readerId, String isbn, int day, Reader waitingReader) {}
+    private Stack<OperationData> history;
 
     public LibraryManager() {
-        // TODO
+        library = new Library();
+        history = new Stack<>();
     }
 
     // ----- Métodos que delegam na Library sem alterar o histórico -----
 
     public void addBook(Book book) {
-        // TODO
+        library.addBook(book);
     }
 
     public boolean hasBook(String isbn) {
-        // TODO
-        return false;
+        return library.hasBook(isbn);
     }
 
     public boolean hasReader(int id) {
-        // TODO
-        return false;
+        return library.hasReader(id);
     }
 
     public Book getBook(String isbn) {
-        // TODO
-        return null;
+        return library.getBook(isbn);
     }
 
     public Reader getReader(int id) {
-        // TODO
-        return null;
+        return library.getReader(id);
     }
 
     public List<Loan> loansOf(int readerId) {
-        // TODO
-        return null;
+        return library.loansOf(readerId);
     }
 
     public List<Book> catalog() {
-        // TODO
-        return null;
+        return library.catalog();
     }
 
     public List<Reader> readers() {
-        // TODO
-        return null;
+        return library.readers();
     }
 
     public WaitingList waitingListFor(String isbn) {
-        // TODO
-        return null;
+        return library.waitingListFor(isbn);
     }
 
     // ----- Métodos que, para além de delegar, registam no histórico -----
 
     public Reader registerReader(String name, Reader.Priority p) {
-        return null;
+        Reader r = library.registerReader(name, p);
+        history.push(new OperationData("register", r.getId(), "", 0, null));
+        return r;
     }
 
     public Loan borrow(int readerId, String isbn, int day) {
-        return null;
+        WaitingList w = waitingListFor(isbn);
+        history.push(new OperationData("borrow", readerId, isbn, day,
+                        library.getReader(readerId)));
+        return library.borrow(readerId, isbn, day);
     }
 
     public Loan returnBook(int readerId, String isbn, int day) {
-        return null;
+        WaitingList w = waitingListFor(isbn);
+        history.push(new OperationData("return", readerId, isbn, day,
+                        w.isEmpty() ? null : w.peek()));
+        return library.returnBook(readerId, isbn, day);
     }
 
     // ----- Undo -----
@@ -78,17 +84,40 @@ public class LibraryManager {
      * para anular, false se o histórico estava vazio.
      */
     public boolean undo() {
-        // TODO
-        return false;
+        if (history.isEmpty()) {
+            return false;
+        }
+        OperationData o = history.pop();
+
+        switch (o.operation()) {
+            case "return" -> {
+                if (o.waitingReader() != null) {
+                    library.returnBook(o.waitingReader().getId(), o.isbn(), o.day);
+                }
+                library.borrow(o.readerId(), o.isbn(), o.day());
+                if (o.waitingReader() != null) {
+                    library.borrow(o.waitingReader().getId(), o.isbn(), o.day());
+                }
+            }
+            case "borrow" -> {
+                WaitingList w = library.waitingListFor(o.isbn());
+
+                if (w.contains(o.waitingReader())) {
+                    w.remove(o.waitingReader());
+                }
+                library.returnBook(o.readerId(), o.isbn(), o.day());
+            } 
+            case "register" -> library.removeReader(o.readerId());
+        }
+        return true;
     }
 
     public int historySize() {
-        // TODO
-        return 0;
+        return history.size();
     }
 
     public void clearHistory() {
-        // TODO
+        history.clear();
     }
 
     /**
@@ -96,7 +125,6 @@ public class LibraryManager {
      */
     @Override
     public String toString() {
-        // TODO
-        return null;
+        return library.toString();
     }
 }
