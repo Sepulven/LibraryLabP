@@ -15,14 +15,14 @@ import java.util.Queue;
 public class WaitingList {
 
     private record Entry(Reader reader, long order) implements Comparable<Entry>{
-    	@Override
-    	public int compareTo(Entry o) {
-    		int p = Integer.compare(o.reader().getPriority().ordinal(),
-    								this.reader().getPriority().ordinal());
-    		if (p != 0) return p;
-    		return Long.compare(this.order(), o.order());
-    	}
+        @Override
+        public int compareTo(Entry o) {
+            int p = Integer.compare(o.reader().getPriority().ordinal(), this.reader().getPriority().ordinal());
+            if (p != 0) return p;
+            return Long.compare(this.order(), o.order());
+        }
     }
+
     private Queue<Entry> q;
     private int counter;
 

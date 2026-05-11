@@ -15,7 +15,7 @@ public class Book {
     private String title;
     private String author;
     private int total;
-    private int availableCopies;
+    private int availableCopies;	
     /**
      * Constrói um livro com totalCopies exemplares (todos inicialmente
      * disponíveis).

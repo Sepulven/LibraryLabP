@@ -105,11 +105,15 @@ public class Library {
             return null;
         }
 
-        for (Loan l : loanList) {
+        Iterator<Loan> it = loanList.iterator();
+
+        while (it.hasNext()) {
+            Loan l = it.next();
             if (l.getBook().equals(b)) {
-                loanList.remove(l);
+                it.remove();
             }
         }
+
         b.returnCopy();
 
         if (w.isEmpty()) {
